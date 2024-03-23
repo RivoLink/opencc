@@ -1,0 +1,9 @@
+{
+  "name": "opencc-helper",
+  "author": "RivoLink",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
+}

@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+    branches:
+      - release
+
+jobs:
+  release:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout ${{github.event.ref}}
+        uses: actions/checkout@v4
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Setup Git Config
+        run: |
+          git config user.email "rivo.link@gmail.com"
+          git config user.name "RivoLink"
+
+      - name: Setup PHP
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.1"
+
+      - name: Setup Version
+        run: |
+          version=$(grep 'code:' .helper/config.yaml | awk '{print $2}')
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+
+      - name: Setup Artifact
+        run: |
+          echo "ARTIFACT=dist/opencc-${{env.VERSION}}.php" >> "$GITHUB_ENV"
+
+      - name: Composer Install
+        uses: "ramsey/composer-install@v3"
+        with:
+          working-directory: ".helper"
+
+      - name: Create Artifact
+        run: |
+          php .helper/scripts/build.php
+
+      - name: Commit Changes
+        run: |
+          git add .
+          git commit -m "${{env.VERSION}}"
+
+      - name: Push Changes
+        run: |
+          git push origin main
+
+      - name: Remove Branch
+        run: |
+          git push origin --delete release
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          gh release create ${{env.VERSION}} ${{env.ARTIFACT}} --generate-notes

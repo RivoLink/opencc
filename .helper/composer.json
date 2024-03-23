@@ -1,0 +1,17 @@
+{
+    "name": "rivolink/opencc-helper",
+    "description": "Helper for Open CC.",
+    "authors": [
+        {
+            "name": "RivoLink",
+            "email": "rivo.link@gmail.com"
+        }
+    ],
+    "require": {
+        "mrclay/minify": "^4.0",
+        "symfony/yaml": "^6.4"
+    },
+    "require-dev": {
+        "symplify/easy-coding-standard": "^12.1"
+    }
+}

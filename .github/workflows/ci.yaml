@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - release
+      - fix/*
+      - feature/*
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ${{github.event.ref}}
+        uses: actions/checkout@v4
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Setup PHP
+        uses: "shivammathur/setup-php@v2"
+        with:
+          php-version: "8.1"
+
+      - name: Setup NodeJs
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.11.0"
+
+      - name: Setup Yarn
+        run: |
+          npm install -g yarn
+
+      - name: Composer Install
+        uses: "ramsey/composer-install@v3"
+        with:
+          working-directory: ".helper"
+
+      - name: Yarn Install
+        run: |
+          yarn install --frozen-lockfile --cwd .helper
+
+      - name: Check Helper ECS
+        run: |
+          cd .helper
+          ./vendor/bin/ecs check
+
+      - name: Check Helper EsLint
+        run: |
+          cd .helper
+          yarn run eslint --config .eslintrc.yaml ./../src/assets/js

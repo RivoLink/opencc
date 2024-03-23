@@ -1,0 +1,6 @@
+- name: Deploy
+  hosts: opencc
+
+  tasks:
+    - name: Deploy
+      command: '~/deploy/opencc.sh'

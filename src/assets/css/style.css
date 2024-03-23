@@ -1,0 +1,188 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ddd;
+}
+
+div.presentation {
+    background-color: #282a36;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+div.card {
+    width: 80%;
+    max-width: 1000px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 5px 8px 8px rgba(0, 0, 0, 0.5);
+}
+
+div.toolbar {
+    background-color: #333;
+    padding: 15px;
+    color: white;
+    text-align: center;
+    z-index: 2;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.toolbar .left-tools,
+div.toolbar .right-tools {
+    display: flex;
+}
+
+div.toolbar button,
+div.toolbar select {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+div.toolbar select {
+    margin-right: 10px;
+    padding-right: 20px;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgb(51, 51, 51)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    background-size: 1em;
+}
+
+div.toolbar .left-tools button {
+    background-color: #4caf50;
+    color: white;
+}
+
+div.toolbar .left-tools button:hover {
+    background-color: #45a049;
+}
+
+div.toolbar .right-tools button,
+div.toolbar .right-tools select {
+    background-color: white;
+    color: #333;
+}
+
+div.toolbar .right-tools button:hover,
+div.toolbar .right-tools select:hover {
+    background-color: #eee;
+}
+
+div.main {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    resize: vertical;
+    position: relative;
+    overflow: hidden;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+div.main::-webkit-resizer {
+    display: none;
+}
+
+#editor-panel {
+    width: 100%;
+    flex: 1;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    overflow: auto;
+}
+
+#output-panel {
+    position: absolute;
+    top: 0;
+    right: calc(-300px + -2 * 20px);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 300px;
+    background-color: #f4f4f4;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    transition: right 0.3s ease;
+}
+
+#output-panel.show {
+    right: 0;
+}
+
+.clear-output-button {
+    position: absolute;
+    bottom: 10px;
+    right: 7px;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+}
+
+.output-content {
+    flex-grow: 1;
+    word-break: break-all;
+    font-family: monospace;
+    padding: 5px 15px 10px;
+    line-height: 20px;
+    overflow-y: auto;
+    max-height: calc(100% - (5px + 10px));
+}
+
+.output-content p span {
+    display: block;
+}
+
+.output-content p span.success {
+    color: #4caf50;
+}
+
+.output-content p span.error {
+    color: #dc3545;
+}
+
+.output-content p.placeholder {
+    opacity: 0.5;
+}
+
+.output-content p.running::after {
+    content: "Running code";
+    animation: dots 1.5s infinite;
+}
+
+#output-running,
+#output-placeholder {
+    display: none;
+}
+
+#output-placeholder {
+    opacity: 0.5;
+}
+
+#output-running.show,
+#output-placeholder.show {
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    div.card {
+        width: 90%;
+        margin: 40px auto;
+    }
+}
+
+@keyframes dots {
+    0%  { content: 'Running code'; }
+    25% { content: 'Running code.'; }
+    50% { content: 'Running code..'; }
+    75% { content: 'Running code...'; }
+}

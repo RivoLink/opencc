@@ -1,0 +1,4 @@
+/.phpecs
+/node_modules
+/vendor
+/config.local.yaml

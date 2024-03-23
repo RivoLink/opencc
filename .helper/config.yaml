@@ -1,0 +1,15 @@
+version:
+    code: 1.0.0
+    auto_update: true
+template:
+    path: $project_dir/.helper/assets/template.twig
+embeded:
+    token: $project_dir/src/private/token.txt
+    style: $project_dir/src/assets/css/style.css
+    script: $project_dir/src/assets/js/script.js
+    favicon: '@base64:$project_dir/src/assets/img/favicon.ico'
+output:
+    dir: $project_dir/dist
+env:
+    username: Anonymous
+    password: a439579cae86060066478decd838bc39

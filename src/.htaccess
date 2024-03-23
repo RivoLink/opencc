@@ -1,0 +1,9 @@
+# Enable rewrite
+RewriteEngine On
+
+# Hide private folder
+RewriteRule ^private/(.*)$ / [R=404,L]
+
+# Force HTTP to HTTPS
+RewriteCond %{HTTPS}  !=on
+RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
