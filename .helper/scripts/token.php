@@ -1,6 +1,10 @@
 <?php
 
-$dir = substr(__DIR__, 0, strpos(__DIR__, '/.helper'));
+$dir = substr(
+    __DIR__,
+    0,
+    strpos(__DIR__, DIRECTORY_SEPARATOR.'.helper')
+);
 
 require_once $dir.'/.helper/vendor/autoload.php';
 
