@@ -43,7 +43,7 @@ jobs:
       - name: Check Helper ECS
         run: |
           cd .helper
-          ./vendor/bin/ecs check
+          php vendor/bin/ecs check
 
       - name: Check Helper EsLint
         run: |
