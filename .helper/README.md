@@ -15,6 +15,6 @@ composer install
 make ci
 
 # or manually
-./vendor/bin/ecs check
+php vendor/bin/ecs check
 yarn run eslint --config .eslintrc.yaml ./../src/assets/js
 ```
