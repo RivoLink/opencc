@@ -1,6 +1,6 @@
-start:
+serve:
 	php -S localhost:7001 -t src/
-.PHONY: start
+.PHONY: serve
 
 open:
 	open http://localhost:7001
