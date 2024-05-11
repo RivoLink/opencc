@@ -15,9 +15,35 @@ div.card {
     width: 80%;
     max-width: 1000px;
     margin: 50px auto;
+    position: relative;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 5px 8px 8px rgba(0, 0, 0, 0.5);
+}
+
+div.loader {
+    z-index: 10;
+    position: absolute;
+    background: #0002;
+    padding-top: 40px;
+    width: 100%;
+    height: calc(100% - 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.loader.hide {
+    display: none;
+}
+
+div.loader .loading {
+    width: 20px;
+    height: 20px;
+    border: 5px solid #4d4d4d;
+    border-top: 5px solid #fff;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
 }
 
 div.toolbar {
@@ -33,11 +59,6 @@ div.toolbar {
     align-items: center;
 }
 
-div.toolbar .left-tools,
-div.toolbar .right-tools {
-    display: flex;
-}
-
 div.toolbar button,
 div.toolbar select {
     padding: 10px;
@@ -48,7 +69,7 @@ div.toolbar select {
 }
 
 div.toolbar select {
-    margin-right: 10px;
+    margin-right: 5px;
     padding-right: 20px;
     appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgb(51, 51, 51)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -66,10 +87,64 @@ div.toolbar .left-tools button:hover {
     background-color: #45a049;
 }
 
+div.toolbar .left-tools button.run-button {
+    border-radius: 5px 0px 0px 5px;
+}
+
+div.toolbar .left-tools button.run-button span {
+    min-width: 50px;
+    display: inline-block;
+}
+
+div.toolbar .left-tools button.action-button {
+    border-left:1px solid #fff8;
+    border-radius: 0px 5px 5px 0px;
+}
+
+div.toolbar .left-tools .actions {
+    position: absolute;
+    display: inline-block;
+}
+
+div.toolbar .left-tools .action-select {
+    z-index: 10;
+    display: none;
+    overflow: hidden;
+    position: absolute;
+    min-width: 125px;
+    border-radius: 0px 5px 5px 5px;
+    background-color: #f1f1f1;
+}
+
+div.toolbar .left-tools .action-select a {
+    color: black;
+    padding: 10px;
+    display: block;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+div.toolbar .left-tools .action-select a:hover {
+    background-color: #ddd
+}
+
+div.toolbar .left-tools .actions:hover .action-select {
+    display: block;
+}
+
 div.toolbar .right-tools button,
 div.toolbar .right-tools select {
     background-color: white;
     color: #333;
+}
+
+div.toolbar .right-tools #lang-select {
+    min-width: 100px;
+}
+
+div.toolbar .right-tools #toggle-button.disable {
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 div.toolbar .right-tools button:hover,
@@ -178,6 +253,11 @@ div.main::-webkit-resizer {
         width: 90%;
         margin: 40px auto;
     }
+}
+
+@keyframes spin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @keyframes dots {

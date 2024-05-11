@@ -30,11 +30,24 @@
         <p>Write, compile and explore your code.</p>
     </div>
     <div class="card">
+        <div class="loader hide">
+            <div class="loading"></div>
+        </div>
         <div class="toolbar">
             <div class="left-tools">
-                <button onclick="compileCode()">
-                    <i class="far fa-play-circle"></i> Compile
+                <button class="run-button" onclick="runAction()">
+                    <i class="far fa-play-circle"></i>
+                    <span>Compile</span>
                 </button>
+                <div class="actions">
+                    <button class="action-button">
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="action-select">
+                        <a href="javascript:void(0)" onclick="changeAction('Compile')">Compile</a>
+                        <a href="javascript:void(0)" onclick="changeAction('Format')">Format</a>
+                    </div>
+                </div>
             </div>
             <div class="right-tools">
                 <select id="lang-select" onchange="selectLanguage()">
@@ -74,6 +87,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/clike/clike.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/php/php.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/css/css.min.js"></script>
 
     <script>
         window._token = '<?=$token?>';

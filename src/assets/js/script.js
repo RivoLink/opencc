@@ -1,46 +1,106 @@
-var langs = {
+const LANGS = {
     current: null,
     php: {
+        text: 'PHP',
         code: 'php',
         mode: 'text/x-php',
         sample: '// echo \'runs\';\n',
+        format: false,
+        compile: true,
     },
     javascript: {
+        text: 'JavaScript',
         code: 'javascript',
         mode: 'javascript',
         sample: '// console.log(\'runs\');\n',
+        format: false,
+        compile: true,
     },
     python: {
+        text: 'Python',
         code: 'python',
         mode: 'python',
         sample: '# print(\'runs\')\n',
+        format: false,
+        compile: true,
+    },
+    html: {
+        text: 'HTML',
+        code: 'html',
+        mode: 'htmlmixed',
+        sample: '<!-- html -->\n',
+        format: true,
+        compile: false,
+    },
+    json: {
+        text: 'JSON',
+        code: 'json',
+        mode: 'javascript',
+        sample: '// json\n',
+        format: true,
+        compile: false,
+    },
+    css: {
+        text: 'CSS',
+        code: 'css',
+        mode: 'css',
+        sample: '/* css */\n',
+        format: true,
+        compile: false,
     },
 };
 
-langs.current = langs.php;
+LANGS.current = LANGS.php;
 
 // eslint-disable-next-line no-undef
 var editor = CodeMirror(document.getElementById('editor-panel'), {
-    mode: langs.current.mode,
+    mode: LANGS.current.mode,
     lineNumbers: true,
     theme: 'dracula'
 });
 
 editor.setSize('100%', '100%');
-editor.setValue(langs.current.sample);
+editor.setValue(LANGS.current.sample);
 editor.setCursor(editor.lineCount(), 0);
 editor.focus();
 
+function isCompilation() {
+    return getAction() == 'compile';
+}
+
+function getAction() {
+    var action = document
+        .querySelector('.run-button')
+        .getAttribute('data-action');
+
+    if (!action) {
+        action = 'compile';
+    }
+
+    return action;
+}
+
 // eslint-disable-next-line no-unused-vars
+function runAction() {
+    isCompilation() ? compileCode() : formatCode();
+}
+
 function compileCode() {
     var code = editor.getValue();
-    apiCompile(code, checkOutput, showError);
+    apiAction(code, compileCheck, showError);
     togglePlaceholder(false);
     toggleRunning(true);
     toggleOutputPanel(true);
 }
 
-function checkOutput(data) {
+function formatCode() {
+    var code = editor.getValue();
+    apiAction(code, formatCheck, toggleLoading);
+    toggleLoading(true);
+    toggleOutputPanel(false);
+}
+
+function compileCheck(data) {
     function check(count, max) {
         apiCheck(data.compilation_id, showOutput, showError, function(error) {
             if (count < max){
@@ -54,42 +114,26 @@ function checkOutput(data) {
     check(1, 5);
 }
 
-// eslint-disable-next-line no-unused-vars
-function selectLanguage() {
-    var selected = document.getElementById('lang-select');
-
-    if (langs[selected.value]) {
-        langs.current = langs[selected.value];
-        editor.setValue(langs.current.sample);
-        editor.setOption('mode', langs.current.mode);
-        editor.setCursor(editor.lineCount(), 0);
-        editor.focus();
+function formatCheck(data) {
+    function check(count, max) {
+        apiCheck(data.formatting_id, showFormatted, toggleLoading, function() {
+            if (count < max){
+                check(count + 1, max);
+            } else {
+                toggleLoading();
+            }
+        });
     }
+
+    check(1, 5);
 }
 
-function toggleOutputPanel(show) {
-    var outputPanel = document.getElementById('output-panel');
-    if (show == undefined) {
-        outputPanel.classList.toggle('show');
-    } else {
-        outputPanel.className = show ? 'show' : '';
-    }
-}
+function showFormatted(data) {
+    editor.setValue(data.output ?? '');
+    editor.setCursor(editor.lineCount(), 0);
+    editor.focus();
 
-function toggleRunning(show) {
-    var outputRunning = document.getElementById('output-running');
-    outputRunning.className = show ? 'show' : '';
-}
-
-function togglePlaceholder(show) {
-    var outputPlaceholder = document.getElementById('output-placeholder');
-    outputPlaceholder.className = show ? 'show' : '';
-}
-
-// eslint-disable-next-line no-unused-vars
-function clearOutput() {
-    var outputRows = document.getElementById('output-rows');
-    outputRows.innerHTML = '';
+    toggleLoading(false);
 }
 
 function showOutput(data) {
@@ -108,6 +152,109 @@ function showError(data) {
         'Compilation error',
         data.message
     );
+}
+
+// eslint-disable-next-line no-unused-vars
+function clearOutput() {
+    var outputRows = document.getElementById('output-rows');
+    outputRows.innerHTML = '';
+}
+
+// eslint-disable-next-line no-unused-vars
+function changeAction(action) {
+    var select = document.querySelector('.action-select');
+    select.style.display = 'none';
+
+    setTimeout(() => {
+        select.removeAttribute('style');
+    }, 100);
+
+    var runText = document.querySelector('.run-button span');
+    var runButton = document.querySelector('.run-button');
+
+    runText.innerText = action;
+    runButton.setAttribute('data-action', action.toLowerCase());
+
+    changeLanguages();
+    selectLanguage();
+    toggleOutputPanel(false);
+    handleOutputButton(!isCompilation());
+}
+
+function selectLanguage() {
+    var selected = document.getElementById('lang-select');
+
+    if (LANGS[selected.value]) {
+        LANGS.current = LANGS[selected.value];
+        editor.setValue(LANGS.current.sample);
+        editor.setOption('mode', LANGS.current.mode);
+        editor.setCursor(editor.lineCount(), 0);
+        editor.focus();
+    }
+}
+
+function changeLanguages() {
+    var action = getAction();
+
+    var select = document.getElementById('lang-select');
+    select.innerHTML = '';
+
+    Object.entries(LANGS).map(function([, lang], index) {
+        if (!lang[action]) {
+            return;
+        }
+
+        var option = document.createElement('option');
+        option.value = lang.code;
+        option.innerText = lang.text;
+
+        select.appendChild(option);
+
+        if (index == 0) {
+            option.setAttribute('selected', true);
+        }
+    });
+}
+
+function toggleLoading(show) {
+    var loader = document.querySelector('div.loader');
+    if (show === true) {
+        loader.classList.remove('hide');
+    } else {
+        loader.classList.add('hide');
+    }
+}
+
+function toggleRunning(show) {
+    var outputRunning = document.getElementById('output-running');
+    outputRunning.className = show ? 'show' : '';
+}
+
+function togglePlaceholder(show) {
+    var outputPlaceholder = document.getElementById('output-placeholder');
+    outputPlaceholder.className = show ? 'show' : '';
+}
+
+function toggleOutputPanel(show) {
+    var outputPanel = document.getElementById('output-panel');
+    if (show == undefined) {
+        outputPanel.classList.toggle('show');
+    } else if (show) {
+        outputPanel.classList.add('show');
+    } else {
+        outputPanel.classList.remove('show');
+    }
+}
+
+function handleOutputButton(disable) {
+    var outputButton = document.getElementById('toggle-button');
+    if (disable == undefined) {
+        outputButton.classList.toggle('disable');
+    } if (disable) {
+        outputButton.classList.add('disable');
+    } else {
+        outputButton.classList.remove('disable');
+    }
 }
 
 function createRow(type, title, content) {
@@ -134,9 +281,15 @@ function createRow(type, title, content) {
     outputRows.appendChild(outputRow);
 }
 
-function apiCompile(code, onSuccess, onError) {
+function apiAction(code, onSuccess, onError) {
+    var url = 'https://api.rivolink.mg/api/formatter/v1/format';
+
+    if (isCompilation()) {
+        url = 'https://api.rivolink.mg/api/compiler/v1/compile';
+    }
+
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://api.rivolink.mg/api/compiler/v1/compile', true);
+    xhr.open('POST', url, true);
 
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', 'Bearer '+window._token);
@@ -149,6 +302,8 @@ function apiCompile(code, onSuccess, onError) {
             onError({message: 'Request failed.'});
         } if (resp.compilation_id) {
             onSuccess(resp);
+        } else if (resp.formatting_id) {
+            onSuccess(resp);
         } else {
             onError(resp);
         }
@@ -159,14 +314,20 @@ function apiCompile(code, onSuccess, onError) {
     };
 
     xhr.send(JSON.stringify({
-        lang: langs.current.code,
+        lang: LANGS.current.code,
         code
     }));
 }
 
-function apiCheck(compilation_id, onSuccess, onError, onPending) {
+function apiCheck(action_id, onSuccess, onError, onPending) {
+    var url = 'https://api.rivolink.mg/api/formatter/v1/check/';
+
+    if (isCompilation()) {
+        url = 'https://api.rivolink.mg/api/compiler/v1/check/';
+    }
+
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://api.rivolink.mg/api/compiler/v1/check/'+compilation_id, true);
+    xhr.open('GET', url+action_id, true);
 
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', 'Bearer '+window._token);
