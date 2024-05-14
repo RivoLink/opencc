@@ -178,6 +178,7 @@ function changeAction(action) {
     changeLanguages();
     selectLanguage();
     toggleOutputPanel(false);
+    toggleActionsPopup(false);
     handleOutputButton(!isCompilation());
 }
 
@@ -243,6 +244,17 @@ function toggleOutputPanel(show) {
         outputPanel.classList.add('show');
     } else {
         outputPanel.classList.remove('show');
+    }
+}
+
+function toggleActionsPopup(show) {
+    var actions = document.querySelector('.actions');
+    if (show == undefined) {
+        actions.classList.toggle('show');
+    } else if (show) {
+        actions.classList.add('show');
+    } else {
+        actions.classList.remove('show');
     }
 }
 
