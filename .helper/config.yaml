@@ -1,5 +1,5 @@
 version:
-    code: 2.0.1
+    code: 2.0.2
     auto_update: true
 template:
     path: $project_dir/.helper/assets/template.twig
