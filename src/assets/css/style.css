@@ -128,7 +128,7 @@ div.toolbar .left-tools .action-select a:hover {
     background-color: #ddd
 }
 
-div.toolbar .left-tools .actions:hover .action-select {
+div.toolbar .left-tools .actions.show .action-select {
     display: block;
 }
 

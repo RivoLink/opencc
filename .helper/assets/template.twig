@@ -40,7 +40,7 @@
                     <span>Compile</span>
                 </button>
                 <div class="actions">
-                    <button class="action-button">
+                    <button class="action-button" onclick="toggleActionsPopup()">
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="action-select">
