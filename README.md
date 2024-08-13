@@ -38,3 +38,6 @@ make build
 # using php
 php .helper/scripts/build.php
 ```
+
+### Credits
+This project uses [Docker Code Compiler](https://github.com/RivoLink/docker-code-compiler) as its internal API.
