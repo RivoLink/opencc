@@ -3,26 +3,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>Open CC | RivoLink</title>
-    <meta name="description" content="Write, compile and explore your code.">
+    <meta name="description" content="Write, compile and explore your code."/>
 
-    <meta property='og:title' content="Open CC, Open Code Compiler" />
+    <meta property='og:title' content="Open CC, Open Code Compiler"/>
     <meta property='og:description' content="Write, compile and explore your code." />
     
-    <meta property='og:type' content="website" />
-    <meta property='og:site_name' content="Open Code Compiler" />
+    <meta property='og:type' content="website"/>
+    <meta property='og:site_name' content="Open Code Compiler"/>
 
-    <link rel="canonical" href="https://opencc.rivolink.mg" />
-    <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="https://opencc.rivolink.mg"/>
+    <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon"/>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/theme/dracula.min.css"/>
 
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css"/>
 </head>
 <body>
     <div class="presentation">
