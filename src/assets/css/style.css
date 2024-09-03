@@ -4,6 +4,19 @@ body {
     background-color: #ddd;
 }
 
+.material-symbols-rounded {
+    font-size: 18px;
+    line-height: 19px;
+}
+
+.material-symbols-rounded.fs-20 {
+    font-size: 20px;
+}
+
+.material-symbols-rounded ~ span {
+    padding: 0px 3px;
+}
+
 div.presentation {
     background-color: #282a36;
     color: white;
@@ -61,7 +74,7 @@ div.toolbar {
 
 div.toolbar button,
 div.toolbar select {
-    padding: 10px;
+    padding: 8px 10px;
     border: none;
     cursor: pointer;
     border-radius: 5px;
@@ -78,6 +91,10 @@ div.toolbar select {
     background-size: 1em;
 }
 
+div.toolbar .left-tools {
+    display: flex;
+}
+
 div.toolbar .left-tools button {
     background-color: #4caf50;
     color: white;
@@ -89,6 +106,8 @@ div.toolbar .left-tools button:hover {
 
 div.toolbar .left-tools button.run-button {
     border-radius: 5px 0px 0px 5px;
+    display: flex;
+    align-items: center;
 }
 
 div.toolbar .left-tools button.run-button span {
@@ -97,13 +116,13 @@ div.toolbar .left-tools button.run-button span {
 }
 
 div.toolbar .left-tools button.action-button {
+    padding: 8px 6px;
     border-left:1px solid #fff8;
     border-radius: 0px 5px 5px 0px;
 }
 
-div.toolbar .left-tools .actions {
-    position: absolute;
-    display: inline-block;
+div.toolbar .left-tools button.action-button i {
+    transform: scale(1.5) translatey(2px);
 }
 
 div.toolbar .left-tools .action-select {
@@ -132,10 +151,16 @@ div.toolbar .left-tools .actions.show .action-select {
     display: block;
 }
 
+div.toolbar .right-tools {
+    display: flex;
+}
+
 div.toolbar .right-tools button,
 div.toolbar .right-tools select {
     background-color: white;
     color: #333;
+    display: flex;
+    align-items: center;
 }
 
 div.toolbar .right-tools #lang-select {
