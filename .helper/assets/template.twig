@@ -3,24 +3,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>Open CC | RivoLink</title>
-    <meta name="description" content="Write, compile and explore your code.">
+    <meta name="description" content="Write, compile and explore your code."/>
 
-    <meta property='og:title' content="Open CC, Open Code Compiler" />
-    <meta property='og:description' content="Write, compile and explore your code." />
+    <meta property='og:title' content="Open CC, Open Code Compiler"/>
+    <meta property='og:description' content="Write, compile and explore your code."/>
     
-    <meta property='og:type' content="website" />
-    <meta property='og:site_name' content="Open Code Compiler" />
+    <meta property='og:type' content="website"/>
+    <meta property='og:site_name' content="Open Code Compiler"/>
 
-    <link rel="canonical" href="https://opencc.rivolink.mg" />
-    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,{{favicon}}">
+    <link rel="canonical" href="https://opencc.rivolink.mg"/>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,{{favicon}}"/>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/theme/dracula.min.css"/>
 
     <style>{{style}}</style>
 </head>
@@ -36,12 +36,12 @@
         <div class="toolbar">
             <div class="left-tools">
                 <button class="run-button" onclick="runAction()">
-                    <i class="far fa-play-circle"></i>
+                    <i class="material-symbols-rounded">play_circle</i>
                     <span>Compile</span>
                 </button>
                 <div class="actions">
                     <button class="action-button" onclick="toggleActionsPopup()">
-                        <i class="fa fa-caret-down"></i>
+                        <i class="material-symbols-rounded">arrow_drop_down</i>
                     </button>
                     <div class="action-select">
                         <a href="javascript:void(0)" onclick="changeAction('Compile')">Compile</a>
@@ -56,7 +56,7 @@
                     <option value="python">Python</option>
                 </select>
                 <button id="toggle-button" onclick="toggleOutputPanel()">
-                    <i class="far fa-dot-circle"></i> Output
+                    <i class="material-symbols-rounded">adjust</i> <span>Output</span>
                 </button>
             </div>
         </div>
@@ -65,7 +65,7 @@
             </div>
             <div id="output-panel">
                 <button class="clear-output-button" onclick="clearOutput();togglePlaceholder(true)">
-                    <i class="fas fa-trash"></i>
+                    <i class="material-symbols-rounded fs-20">delete</i>
                 </button>
                 <div class="output-content">
                     <div id="output-placeholder" class="show">
