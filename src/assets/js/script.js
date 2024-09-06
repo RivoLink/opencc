@@ -65,6 +65,26 @@ editor.setValue(LANGS.current.sample);
 editor.setCursor(editor.lineCount(), 0);
 editor.focus();
 
+document.addEventListener('click', function (e) {
+    switch (e.target.id || e.target.parentElement.id) {
+    case 'fab0':
+        toggleFabButtons();
+        break;
+    case 'fab1':
+        runJsonToPhp();
+        break;
+    case 'fab2':
+        runSwitchCase();
+        break;
+    case 'fab3':
+        runCopyContent('fab3');
+        break;
+    default:
+        toggleFabButtons(false);
+        break;
+    }
+});
+
 function isCompilation() {
     return getAction() == 'compile';
 }
@@ -84,6 +104,35 @@ function getAction() {
 // eslint-disable-next-line no-unused-vars
 function runAction() {
     isCompilation() ? compileCode() : formatCode();
+}
+
+function runJsonToPhp() {
+    toggleOutputPanel(false);
+    toggleFabButtons(false);
+    toggleLoading(true);
+
+    apiPrettier('jsontophp', editor.getValue(), showCode, toggleLoading);
+}
+
+function runSwitchCase() {
+    toggleOutputPanel(false);
+    toggleFabButtons(false);
+    toggleLoading(true);
+
+    apiPrettier('switchcase', editor.getValue(), showCode, toggleLoading);
+}
+
+function runCopyContent(id) {
+    var fab = document.getElementById(id);
+    var text = fab.getAttribute('data-tooltip');
+
+    navigator.clipboard.writeText(editor.getValue());
+    
+    fab.setAttribute('data-tooltip', 'Copied');
+
+    setTimeout(() => {
+        fab.setAttribute('data-tooltip', text);
+    }, 2000);
 }
 
 function compileCode() {
@@ -117,7 +166,7 @@ function compileCheck(data) {
 
 function formatCheck(data) {
     function check(count, max) {
-        apiCheck(data.formatting_id, showFormatted, toggleLoading, function() {
+        apiCheck(data.formatting_id, showCode, toggleLoading, function() {
             if (count < max){
                 check(count + 1, max);
             } else {
@@ -129,7 +178,7 @@ function formatCheck(data) {
     check(1, 5);
 }
 
-function showFormatted(data) {
+function showCode(data) {
     editor.setValue(data.output ?? '');
     editor.setCursor(editor.lineCount(), 0);
     editor.focus();
@@ -237,6 +286,17 @@ function togglePlaceholder(show) {
     outputPlaceholder.className = show ? 'show' : '';
 }
 
+function toggleFabButtons(show) {
+    var innerFabs = document.querySelector('.inner-fabs');
+    if (show == undefined) {
+        innerFabs.classList.toggle('show');
+    } else if (show) {
+        innerFabs.classList.add('show');
+    } else {
+        innerFabs.classList.remove('show');
+    }
+}
+
 function toggleOutputPanel(show) {
     var outputPanel = document.getElementById('output-panel');
     if (show == undefined) {
@@ -292,6 +352,36 @@ function createRow(type, title, content) {
 
     var outputRows = document.getElementById('output-rows');
     outputRows.appendChild(outputRow);
+}
+
+function apiPrettier(prettier, code, onSuccess, onError) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'https://api.rivolink.mg/api/prettier/v2/prettier', true);
+
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', 'Bearer '+window._token);
+
+    xhr.onload = function() {
+        var resp = null;
+        try {
+            resp = JSON.parse(xhr.responseText);
+        } catch (e) {
+            onError({message: 'Request failed.'});
+        } if (resp) {
+            onSuccess(resp);
+        } else {
+            onError(resp);
+        }
+    };
+
+    xhr.onerror = function() {
+        onError({message: 'Request failed.'});
+    };
+
+    xhr.send(JSON.stringify({
+        prettier,
+        code
+    }));
 }
 
 function apiAction(code, onSuccess, onError) {
