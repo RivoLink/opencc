@@ -79,6 +79,14 @@
                     </div>
                 </div>
             </div>
+            <div class="fabs-container">
+                <div class="inner-fabs">
+                    <div class="fab" id="fab3" data-tooltip="Copy content"><i class="material-symbols-rounded fb-19">content_copy</i></div>
+                    <div class="fab" id="fab2" data-tooltip="Switch case"><i class="material-symbols-rounded fb-19">match_case</i></div>
+                    <div class="fab" id="fab1" data-tooltip="Json to PHP"><i class="material-symbols-rounded fb-19">data_object</i></div>
+                </div>
+                <div class="fab" id="fab0"><i class="material-symbols-rounded fb-29">add</i></div>
+            </div>
         </div>
     </div>
 
