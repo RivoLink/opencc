@@ -40,4 +40,6 @@ php .helper/scripts/build.php
 ```
 
 ### Credits
-This project uses [Docker Code Compiler](https://github.com/RivoLink/docker-code-compiler) as its internal API.
+This project uses :
+- [Docker Code Compiler](https://github.com/RivoLink/docker-code-compiler)
+- [João Fernandes - Floating Action Button](https://codepen.io/joaofnds/full/aBMLXj)
