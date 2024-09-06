@@ -11,7 +11,7 @@
 
     <meta property='og:title' content="Open CC, Open Code Compiler"/>
     <meta property='og:description' content="Write, compile and explore your code." />
-    
+
     <meta property='og:type' content="website"/>
     <meta property='og:site_name' content="Open Code Compiler"/>
 

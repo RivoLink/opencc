@@ -56,7 +56,7 @@ LANGS.current = LANGS.php;
 var editor = CodeMirror(document.getElementById('editor-panel'), {
     mode: LANGS.current.mode,
     lineNumbers: true,
-    indentUnit: 4, 
+    indentUnit: 4,
     theme: 'dracula'
 });
 
