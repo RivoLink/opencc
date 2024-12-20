@@ -25,4 +25,4 @@ jobs:
           playbook: .ansible/playbooks/deploy.yaml
           inventory: |
             [opencc]
-            opencc.rivolink.mg ansible_user=rivol5592
+            opencc.rivolink.mg ansible_user=rivol7660

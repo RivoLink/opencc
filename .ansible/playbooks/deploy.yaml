@@ -3,4 +3,4 @@
 
   tasks:
     - name: Deploy
-      command: '~/deploy/opencc.sh'
+      command: '~/.deploy/opencc.sh'
