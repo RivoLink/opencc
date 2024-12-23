@@ -356,7 +356,7 @@ function createRow(type, title, content) {
 
 function apiPrettier(prettier, code, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://api.rivolink.mg/api/prettier/v2/prettier', true);
+    xhr.open('POST', 'https://api.rivolink.mg/api/code/prettier/v2/prettier', true);
 
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', 'Bearer '+window._token);
@@ -385,10 +385,10 @@ function apiPrettier(prettier, code, onSuccess, onError) {
 }
 
 function apiAction(code, onSuccess, onError) {
-    var url = 'https://api.rivolink.mg/api/formatter/v1/format';
+    var url = 'https://api.rivolink.mg/api/code/formatter/v1/format';
 
     if (isCompilation()) {
-        url = 'https://api.rivolink.mg/api/compiler/v1/compile';
+        url = 'https://api.rivolink.mg/api/code/compiler/v1/compile';
     }
 
     var xhr = new XMLHttpRequest();
@@ -423,10 +423,10 @@ function apiAction(code, onSuccess, onError) {
 }
 
 function apiCheck(action_id, onSuccess, onError, onPending) {
-    var url = 'https://api.rivolink.mg/api/formatter/v1/check/';
+    var url = 'https://api.rivolink.mg/api/code/formatter/v1/check/';
 
     if (isCompilation()) {
-        url = 'https://api.rivolink.mg/api/compiler/v1/check/';
+        url = 'https://api.rivolink.mg/api/code/compiler/v1/check/';
     }
 
     var xhr = new XMLHttpRequest();
